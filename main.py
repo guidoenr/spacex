@@ -1,5 +1,5 @@
 from flask import Flask, request
-import model
+from model import *
 
 app = Flask(__name__)
 
@@ -7,13 +7,25 @@ app = Flask(__name__)
 def index():
     return "github.com/guidoenr/spacex"
 
+'''
+with the .capitalize() and .globals()
+methods, i would be able to create 
+an instance of the desired class
+using a kind of dynamic object creation ,
+that will be awesome in a future, because
+if there's a new "Task" i only have to create
+the class
+'''
 @app.route("/create", methods=['POST'])
 def create_task():
     json_request = request.get_json()
-    _type = json_request['type']
-    print(_type)
-    return json_request  
+    _type = json_request['type'].capitalize()
 
+    constructor = globals()[_type]
+    task_instance = constructor(**json_request)
+    
+    print(task_instance)
+    return json_request  
 
 if __name__ == '__main__':
     app.run()
