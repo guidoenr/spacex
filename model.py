@@ -1,17 +1,14 @@
 from random import random
 import random as rm
 import requests, json
-from credentials import credentials as cre
+from constants import *
 
-words = ['rands', 'w0rd', 'inheritance',
-                'another', 'simple', 'spacex',
-                'etc']
 
-ID_TODO_LIST = cre['id_todo_list']
-ID_BOARD = cre['id_board']
-TOKEN = cre['token']
-API_KEY = cre['api_key']
-
+def init_trello_board():
+    for label in LABELS:
+        base_url = BASE_URL + f'/boards/{ID_BOARD}/labels?name={label[0]}&color={label[1]}'
+        requests.request('POST', base_url, params=AUTH)
+    
 class c_Task:
     def __init__(self, title, description, category, type, idLabels, idMembers):
         self.title = title 
@@ -22,7 +19,7 @@ class c_Task:
         self.idMembers = idMembers
 
     def create_card(self):
-        URL = 'https://api.trello.com/1/cards'
+        URL = BASE_URL + '/cards'
         query = {
             'key': API_KEY,
             'token': TOKEN,
@@ -37,11 +34,11 @@ class c_Task:
 
 class Issue(c_Task):
     def __init__(self, title, description):
-        super().__init__(title, description, 'none', 'issue', [], [])
+        super().__init__(title, description, 'none', 'issue', [ID_ISSUE_LABEl], [])
 
 class Bug(c_Task):
     def __init__(self, description):
-        super().__init__(self.generate_random_title(), description, 'none', 'bug', [], [self.generate_random_member()])
+        super().__init__(self.generate_random_title(), description, 'none', 'bug', [ID_BUG_LABEl], [self.generate_random_member()])
         
     def generate_random_title(self):
         word = rm.choice(words)
@@ -49,21 +46,25 @@ class Bug(c_Task):
         return f'bug-{word}-{num}'
 
     def generate_random_member(self):
-        url = 'https://api.trello.com/1/boards/{ID_BOARD}/members'
-        response = requests.request('GET', url)
-        print(response.data)
+        url = BASE_URL + f'/boards/{ID_BOARD}/members'
+        response = requests.request('GET', url, params=AUTH)
+        data = json.loads(response.content)
+        random_member = rm.choice(data)["id"]
+        return random_member
 
 class Task(c_Task):
     def __init__(self, title, category):
-        super().__init__(title, 'none', category, "task", [], [])
+        super().__init__(title, 'none', category, "task", [ID_TASK_LABEl], [])
    
 
+# init_trello_board()
 
 # issue = Issue("Issue Title", "Issue description")
 # issue.create_card()
 
-bug = Bug("Bug description")
-bug.generate_random_member()
+# bug = Bug("Bug description")
+# bug.create_card()
 
 # task = Task("Task title", "Task category")
 # task.create_card()
+
