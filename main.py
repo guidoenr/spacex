@@ -26,7 +26,7 @@ def create_task():
     task_instance = constructor(**json_request)
     task_instance.create_card()
 
-    return json_request  
+    return task_instance.status
 
 if __name__ == '__main__':
     app.run()

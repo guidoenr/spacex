@@ -27,11 +27,11 @@ class c_Task:
             "idMembers": self.idMembers
         }
         try:
-            response = requests.request('POST', URL, params=query)
+            requests.request('POST', URL, params=query)
+            self.status = f'[OK]: Created {self.type}: {self.title} \n'
         except requests.exceptions.RequestException as re:
-            response = re
-        finally:
-            return response.content 
+            self.status = f'[FAILED]: {re} \n'
+        
 
 class Issue(c_Task):
     def __init__(self, title, description):
@@ -57,9 +57,6 @@ class Task(c_Task):
     def __init__(self, title, category):
         super().__init__(title, 'none', category, "task", [ID_TASK_LABEl], [])
    
-
-# init_trello_board()
-
 # issue = Issue("Issue Title", "Issue description")
 # issue.create_card()
 
