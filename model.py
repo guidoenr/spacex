@@ -1,24 +1,25 @@
 from random import random
 import random as rm
 import requests, json
+from credentials import credentials as cre
 
 words = ['rands', 'w0rd', 'inheritance',
                 'another', 'simple', 'spacex',
                 'etc']
 
-ID_TODO_LIST = '61d8a79933e62e20d78c4555'
-ID_DOING = '61d8a79933e62e20d78c4556'
-ID_DONE = '61d8a79933e62e20d78c4557'       
-
-ID_LABEL 
-
 class c_Task:
+    def __init__(self, title, description, category, type):
+        self.title = title 
+        self.description = description
+        self.category = category
+        self.type = type 
+
     def create_card(self):
         URL = 'https://api.trello.com/1/cards'
         query = {
-            'key': API_KEY,
-            'token': TOKEN,
-            'idList': ID_TODO_LIST,
+            'key': cre['api_key'],
+            'token': cre['token'],
+            'idList': cre['id_todo_list'],
             'name': self.title, 
             'pos': 'bottom',
             'desc': self.description
@@ -26,18 +27,13 @@ class c_Task:
         response = requests.request('POST', URL, params=query)
 
 class Issue(c_Task):
-    def __init__(self, title, description, type):
-        self.description = description
-        self.type = type
-        self.title = title
-
+    def __init__(self, title, description):
+        super().__init__(title, description, 'none', 'issue')
 
 class Bug(c_Task):
-    def __init__(self, description, type):
-        self.description = description
-        self.type = type
-        self.title = self.generate_random_title()
-
+    def __init__(self, description):
+        super().__init__(self.generate_random_title(), description, 'none', 'bug')
+        
     def generate_random_title(self):
         word = rm.choice(words)
         num = random()
@@ -45,16 +41,16 @@ class Bug(c_Task):
 
  
 class Task(c_Task):
-    def __init__(self, title, category, type):
-        self.type = type
-        self.title = title 
-        self.category = category 
+    def __init__(self, title, category):
+        super().__init__(title, 'none', category, "task")
+   
 
-# issue = Issue("Issue title", "Description", "issue")
+
+# issue = Issue("Issue Title", "Issue description")
 # issue.create_card()
 
-# bug = Bug("Bug description", "bug")
+# bug = Bug("Bug description")
 # bug.create_card()
 
-task = Task("Task title", "Task category", "task")
+task = Task("Task title", "Task category")
 task.create_card()
