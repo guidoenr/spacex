@@ -1,13 +1,9 @@
 from random import random
-import random as rm
-import requests, json
 from constants import *
 
+import random as rm
+import requests, json
 
-def init_trello_board():
-    for label in LABELS:
-        base_url = BASE_URL + f'/boards/{ID_BOARD}/labels?name={label[0]}&color={label[1]}'
-        requests.request('POST', base_url, params=AUTH)
     
 class c_Task:
     def __init__(self, title, description, category, type, idLabels, idMembers):
@@ -30,7 +26,12 @@ class c_Task:
             "idLabels": self.idLabels,
             "idMembers": self.idMembers
         }
-        response = requests.request('POST', URL, params=query)
+        try:
+            response = requests.request('POST', URL, params=query)
+        except requests.exceptions.RequestException as re:
+            response = re
+        finally:
+            return response.content 
 
 class Issue(c_Task):
     def __init__(self, title, description):

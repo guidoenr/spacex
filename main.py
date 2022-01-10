@@ -22,10 +22,10 @@ def create_task():
     _type = json_request['type'].capitalize()
 
     constructor = globals()[_type]
+    del json_request['type']
     task_instance = constructor(**json_request)
     task_instance.create_card()
-    
-    print(task_instance)
+
     return json_request  
 
 if __name__ == '__main__':
