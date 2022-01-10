@@ -35,14 +35,14 @@ class c_Task:
 
 class Issue(c_Task):
     def __init__(self, title, description):
-        super().__init__(title, description, 'none', 'issue', [ID_ISSUE_LABEl], [])
+        super().__init__(title, description, 'none', 'issue', [ID_ISSUE_LABEL], [])
 
 class Bug(c_Task):
     def __init__(self, description):
-        super().__init__(self.generate_random_title(), description, 'none', 'bug', [ID_BUG_LABEl], [self.generate_random_member()])
+        super().__init__(self.generate_random_title(), description, 'none', 'bug', [ID_BUG_LABEL], [self.generate_random_member()])
         
     def generate_random_title(self):
-        word = rm.choice(words)
+        word = rm.choice(WORDS)
         num = random()
         return f'bug-{word}-{num}'
 
@@ -55,7 +55,11 @@ class Bug(c_Task):
 
 class Task(c_Task):
     def __init__(self, title, category):
-        super().__init__(title, 'none', category, "task", [ID_TASK_LABEl], [])
+        super().__init__(title, 'none', category, "task", [self.get_label_by_category(category)], [])
+
+    def get_label_by_category(self, category):
+        name = f"ID_{category.upper()}_LABEL"
+        return globals()[name]
    
 # issue = Issue("Issue Title", "Issue description")
 # issue.create_card()
