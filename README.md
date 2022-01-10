@@ -6,11 +6,11 @@
 2. generate an API and a TOKEN keys to be able to use this API
 `https://trello.com/app-key`
 ---
-3. create a workspace in the Trello main page
-![](images/2022-01-10-15-06-26.png) \
+3. create a workspace in the Trello main page \
+![](images/2022-01-10-15-06-26.png) 
 ---
-4. once you have created your workspace, you must create a new **Board** and select the corresponding workspace 
-![](images/2022-01-10-15-07-46.png) \
+4. once you have created your workspace, you must create a new **Board** and select the corresponding workspace \
+![](images/2022-01-10-15-07-46.png) 
 ---
 5. congrats, you have created your Board, now, you have to clone this github repository
 ```python
@@ -70,7 +70,7 @@ then, save the file
 https://trello.com/b/pIjpZnOj/newboard.json
 ```
 
-and search for the `id` field (there will be the first field in the page)
+and search for the `id` field (there will be the first field in the page) \
 ![](images/2022-01-10-15-26-15.png) \
 now, please fill that id in the `id_board` field. now you have the credentials complete
 
@@ -81,7 +81,7 @@ now, please fill that id in the `id_board` field. now you have the credentials c
 python3.9 init_trello.py
 ```
 ---
-10. now, you should see your board complete with all the lists:
+10. now, you should see your board complete with all the lists: \
 ![](images/2022-01-10-15-30-14.png) \
 
 ---
@@ -142,5 +142,5 @@ curl -H "Content-Type: application/json" \
 ```
 
 if you run those requests with `bash calls.sh`
-you should see in your trello dashboard the following created tasks:
+you should see in your trello dashboard the following created tasks: \
 ![](images/2022-01-10-15-49-25.png) \
