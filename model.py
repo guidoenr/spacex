@@ -2,8 +2,6 @@ from random import random
 import random as rm
 import requests, json
 
-API_KEY = '77130712b79444a97ed470100c610371'
-TOKEN = '31ffac51c1ecb8cd92f3d193ac7aed7b9deb5a6fc78e1794f440c24a563bd185'
 words = ['rands', 'w0rd', 'inheritance',
                 'another', 'simple', 'spacex',
                 'etc']
@@ -11,6 +9,8 @@ words = ['rands', 'w0rd', 'inheritance',
 ID_TODO_LIST = '61d8a79933e62e20d78c4555'
 ID_DOING = '61d8a79933e62e20d78c4556'
 ID_DONE = '61d8a79933e62e20d78c4557'       
+
+ID_LABEL 
 
 class c_Task:
     def create_card(self):
