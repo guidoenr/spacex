@@ -23,6 +23,7 @@ def create_task():
 
     constructor = globals()[_type]
     task_instance = constructor(**json_request)
+    task_instance.create_card()
     
     print(task_instance)
     return json_request  
